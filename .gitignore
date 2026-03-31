@@ -1,0 +1,6 @@
+# Binários gerados pelo GCC
+*.o
+*.exe
+*.out
+a.out
+app
