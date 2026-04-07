@@ -12,6 +12,7 @@
 typedef struct NoDisciplina {
     char nome[MAX_DISC];
     struct NoDisciplina *prox;
+    struct NoDisciplina *disciplinas;
 } NoDisciplina;
 
 // AlunoCada aluno tem RGM, nome e um ponteiropara o início da sua lista de disciplinas.
@@ -35,5 +36,8 @@ int  inserirAluno(ListaAlunos *lista, int rgm, const char *nome);
 int  buscarAluno(const ListaAlunos *lista, int rgm);
 int  removerAluno(ListaAlunos *lista, int rgm);
 void mostrarAlunos(const ListaAlunos *lista);
+int inserirDisciplinas(Aluno *aluno, const char *nome);
+void listarDisciplinas(const Aluno *aluno);
+void liberarDisciplinas(Aluno *aluno);
 
 #endif

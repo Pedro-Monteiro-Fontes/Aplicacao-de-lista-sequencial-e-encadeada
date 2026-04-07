@@ -32,3 +32,14 @@ void listarDisciplinas(const Aluno *aluno){
   }
   
 }
+
+void liberarDisciplinas(Aluno *aluno){
+  NoDisciplina *atual = atual->disciplinas;
+  while (atual !=NULL)
+  {
+    NoDisciplina *proximo = atual->prox;
+    free(atual);
+    atual=proximo;
+  }
+  aluno->disciplinas = NULL;
+}
