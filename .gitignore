@@ -2,6 +2,6 @@
 *.o
 *.exe
 *.out
-.vscode
+.vscode/
 a.out
 app
