@@ -50,6 +50,8 @@ int removerAluno(ListaAlunos *lista, int rgm) {
     int pos = buscarAluno(lista, rgm);
     if (pos == -1) return -1;
 
+    liberarDisciplinas(&lista->alunos[pos]); /*Libera a lista encadeada antes*/
+
     /* Desloca elementos à esquerda, sobrescrevendo a posição removida */
     for (int i = pos; i < lista->tamanho - 1; i++) {
         lista->alunos[i] = lista->alunos[i + 1];
