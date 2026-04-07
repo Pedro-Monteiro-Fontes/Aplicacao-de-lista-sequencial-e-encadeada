@@ -5,14 +5,16 @@
 
 // Insere a disciplina no inicio da lista encadeada do aluno recebido
 
-int inserirDisciplina(Aluno *aluno, const char *nome){
+int inserirDisciplinas(Aluno *aluno, const char *nome){
  NoDisciplina *novo = (NoDisciplina *) malloc(sizeof(NoDisciplina));
 
  if(novo == NULL) return -1; // falha na alocação
 
- strncpy(novo->nome, nome, MAX_DISC - 1); // novo aponta para o antigo inicio 
+ strncpy(novo->nome, nome, MAX_DISC - 1);
+ novo->nome[MAX_DISC - 1] = '\0';
 
- novo->nome[MAX_DISC - 1 ] = '\0'; // cabeça da lista passa ser o novo nó
+ novo->prox = aluno->disciplinas; // novo aponta para o antigo inicio
+ aluno->disciplinas = novo; // cabeça da lista passa ser o novo nó
 
  return 0;
 }
@@ -34,12 +36,13 @@ void listarDisciplinas(const Aluno *aluno){
 }
 
 void liberarDisciplinas(Aluno *aluno){
-  NoDisciplina *atual = atual->disciplinas;
-  while (atual !=NULL)
-  {
-    NoDisciplina *proximo = atual->prox;
-    free(atual);
-    atual=proximo;
-  }
-  aluno->disciplinas = NULL;
+    NoDisciplina *atual = aluno->disciplinas;
+
+    while (atual != NULL){
+        NoDisciplina *proximo = atual->prox;
+        free(atual);
+        atual = proximo;
+    }
+
+    aluno->disciplinas = NULL;
 }

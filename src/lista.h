@@ -12,7 +12,6 @@
 typedef struct NoDisciplina {
     char nome[MAX_DISC];
     struct NoDisciplina *prox;
-    struct NoDisciplina *disciplinas;
 } NoDisciplina;
 
 // AlunoCada aluno tem RGM, nome e um ponteiropara o início da sua lista de disciplinas.

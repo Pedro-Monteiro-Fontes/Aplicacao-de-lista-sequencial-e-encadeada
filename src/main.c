@@ -9,6 +9,27 @@ static void limparBuffer(void) {
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
+/* Loop de cadastro de disciplinas*/
+static void cadastrarDisciplinas(Aluno *aluno) {
+    char disc[MAX_DISC];
+    char resposta;
+
+    do {
+        printf("    Nome da disciplina: ");
+        fgets(disc, MAX_DISC, stdin);
+        disc[strcspn(disc, "\n")] = '\0';
+
+        if (inserirDisciplinas(aluno, disc) != 0) {
+            printf("    Erro ao alocar disciplina.\n");
+        }
+
+        printf("    Mais disciplina? (s/n): ");
+        scanf(" %c", &resposta);   /* espaço antes de %c consome o '\n' residual */
+        limparBuffer();
+
+    } while (resposta == 's' || resposta == 'S');
+}
+
 int main(void) {
     ListaAlunos sala;
     inicializar(&sala);
@@ -44,13 +65,28 @@ int main(void) {
 
             int resultado = inserirAluno(&sala, rgm, nome);
 
-            if (resultado ==  0) printf("  Aluno cadastrado com sucesso!\n");
+            if (resultado ==  0){
+                printf("  Aluno inserido! Cadastre as disciplinas:\n");
+                int idx = buscarAluno(&sala, rgm);
+                cadastrarDisciplinas(&sala.alunos[idx]);
+                printf("  Cadastro concluido!\n");
+            }
             if (resultado == -1) printf("  Sala cheia (limite de %d alunos).\n", MAX_ALUNOS);
             if (resultado == -2) printf("  RGM %d ja cadastrado.\n", rgm);
 
         } else if (opcao == 2) {
-            mostrarAlunos(&sala);
-
+           if (sala.tamanho == 0) {
+                printf("  Nenhum aluno cadastrado.\n");
+            } else {
+                printf("  %-10s  %s\n", "RGM", "Nome");
+                printf("  %-10s  %s\n", "----------", "--------------------");
+                for (int i = 0; i < sala.tamanho; i++) {
+                    printf("  %-10d  %s\n",
+                           sala.alunos[i].rgm,
+                           sala.alunos[i].nome);
+                    listarDisciplinas(&sala.alunos[i]);
+                }
+            }
         } else if (opcao == 3) {
             int rgm;
             printf("  RGM: ");
